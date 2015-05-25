@@ -44,10 +44,12 @@
     // ****************************************************************************
     // Parse initialization
     [ParseCrashReporting enable];
-    [Parse setApplicationId:@"PklSbwxITu46cOumt6tdWw8Jtg2urg0vj0CrbLr0" clientKey:@"ML2sjwLC7k1RCujNCRP7fxG2HpUxtwzdIR1ElOe7"];
+    //[Parse setApplicationId:@"PklSbwxITu46cOumt6tdWw8Jtg2urg0vj0CrbLr0" clientKey:@"ML2sjwLC7k1RCujNCRP7fxG2HpUxtwzdIR1ElOe7"];
+    [Parse setApplicationId:@"cFOCgoE6v77JoeGXkF5cK5az4FLM5twfdOCGBphU"
+              clientKey:@"eJ5fVdx0SO8cXrZ8mTxxwREK34wpZ6VMcHBumKZl"];
     [PFFacebookUtils initializeFacebook];
     // ****************************************************************************
-  
+
     // Track app open.
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
 
@@ -82,13 +84,13 @@
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     BOOL wasHandled = false;
-    
+
     if ([PFFacebookUtils session]) {
         wasHandled |= [FBAppCall handleOpenURL:url sourceApplication:sourceApplication withSession:[PFFacebookUtils session]];
     } else {
         wasHandled |= [FBAppCall handleOpenURL:url sourceApplication:sourceApplication];
     }
-    
+
     wasHandled |= [self handleActionURL:url];
 
     return wasHandled;
@@ -112,7 +114,7 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     [[NSNotificationCenter defaultCenter] postNotificationName:PAPAppDelegateApplicationDidReceiveRemoteNotification object:nil userInfo:userInfo];
-    
+
     if ([UIApplication sharedApplication].applicationState != UIApplicationStateActive) {
         // Track app opens due to a push notification being acknowledged while the app wasn't active.
         [PFAnalytics trackAppOpenedWithRemoteNotificationPayload:userInfo];
@@ -121,9 +123,9 @@
     if ([PFUser currentUser]) {
         if ([self.tabBarController viewControllers].count > PAPActivityTabBarItemIndex) {
             UITabBarItem *tabBarItem = [[self.tabBarController.viewControllers objectAtIndex:PAPActivityTabBarItemIndex] tabBarItem];
-            
+
             NSString *currentBadgeValue = tabBarItem.badgeValue;
-            
+
             if (currentBadgeValue && currentBadgeValue.length > 0) {
                 NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
                 NSNumber *badgeValue = [numberFormatter numberFromString:currentBadgeValue];
@@ -174,30 +176,30 @@
     [self presentLoginViewController:YES];
 }
 
-- (void)presentTabBarController {    
+- (void)presentTabBarController {
     self.tabBarController = [[PAPTabBarController alloc] init];
     self.homeViewController = [[PAPHomeViewController alloc] initWithStyle:UITableViewStylePlain];
     [self.homeViewController setFirstLaunch:firstLaunch];
     self.activityViewController = [[PAPActivityFeedViewController alloc] initWithStyle:UITableViewStylePlain];
-    
+
     UINavigationController *homeNavigationController = [[UINavigationController alloc] initWithRootViewController:self.homeViewController];
     UINavigationController *emptyNavigationController = [[UINavigationController alloc] init];
     UINavigationController *activityFeedNavigationController = [[UINavigationController alloc] initWithRootViewController:self.activityViewController];
-    
+
     UITabBarItem *homeTabBarItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"Home", @"Home") image:[[UIImage imageNamed:@"IconHome.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] selectedImage:[[UIImage imageNamed:@"IconHomeSelected.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     [homeTabBarItem setTitleTextAttributes: @{ NSForegroundColorAttributeName: [UIColor whiteColor], NSFontAttributeName: [UIFont boldSystemFontOfSize:13] } forState:UIControlStateSelected];
     [homeTabBarItem setTitleTextAttributes: @{ NSForegroundColorAttributeName: [UIColor colorWithRed:114.0f/255.0f green:114.0f/255.0f blue:114.0f/255.0f alpha:1.0f], NSFontAttributeName: [UIFont boldSystemFontOfSize:13] } forState:UIControlStateNormal];
-    
+
     UITabBarItem *activityFeedTabBarItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"Activity", @"Activity") image:[[UIImage imageNamed:@"IconTimeline.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] selectedImage:[[UIImage imageNamed:@"IconTimelineSelected.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     [activityFeedTabBarItem setTitleTextAttributes:@{ NSForegroundColorAttributeName: [UIColor whiteColor], NSFontAttributeName: [UIFont boldSystemFontOfSize:13] } forState:UIControlStateSelected];
     [activityFeedTabBarItem setTitleTextAttributes:@{ NSForegroundColorAttributeName: [UIColor colorWithRed:114.0f/255.0f green:114.0f/255.0f blue:114.0f/255.0f alpha:1.0f], NSFontAttributeName: [UIFont boldSystemFontOfSize:13] } forState:UIControlStateNormal];
-    
+
     [homeNavigationController setTabBarItem:homeTabBarItem];
     [activityFeedNavigationController setTabBarItem:activityFeedTabBarItem];
-    
+
     self.tabBarController.delegate = self;
     self.tabBarController.viewControllers = @[ homeNavigationController, emptyNavigationController, activityFeedNavigationController];
-    
+
     [self.navController setViewControllers:@[ self.welcomeViewController, self.tabBarController ] animated:NO];
 
     // Register for Push Notitications
@@ -222,19 +224,19 @@
     // Unsubscribe from push notifications by removing the user association from the current installation.
     [[PFInstallation currentInstallation] removeObjectForKey:kPAPInstallationUserKey];
     [[PFInstallation currentInstallation] saveInBackground];
-    
+
     // Clear all caches
     [PFQuery clearAllCachedResults];
-    
+
     // Log out
     [PFUser logOut];
     [FBSession setActiveSession:nil];
-    
+
     // clear out cached data, view controllers, etc
     [self.navController popToRootViewControllerAnimated:NO];
-    
+
     [self presentLoginViewController];
-    
+
     self.homeViewController = nil;
     self.activityViewController = nil;
 }
@@ -248,7 +250,7 @@
 
     [[UINavigationBar appearance] setTintColor:[UIColor colorWithRed:254.0f/255.0f green:149.0f/255.0f blue:50.0f/255.0f alpha:1.0f]];
     [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:0.0f/255.0f green:0.0f/255.0f blue:0.0f/255.0f alpha:1.0f]];
-  
+
     [[UINavigationBar appearance] setTitleTextAttributes:@{
                                 NSForegroundColorAttributeName: [UIColor whiteColor]
                                 }];
@@ -256,12 +258,12 @@
     [[UIButton appearanceWhenContainedIn:[UINavigationBar class], nil]
      setTitleColor:[UIColor colorWithRed:254.0f/255.0f green:149.0f/255.0f blue:50.0f/255.0f alpha:1.0f]
      forState:UIControlStateNormal];
-    
+
     [[UIBarButtonItem appearance] setTitleTextAttributes:@{
                                 NSForegroundColorAttributeName:[UIColor colorWithRed:254.0f/255.0f green:149.0f/255.0f blue:50.0f/255.0f alpha:1.0f]
                                 }
                                 forState:UIControlStateNormal];
-    
+
     [[UISearchBar appearance] setTintColor:[UIColor colorWithRed:254.0f/255.0f green:149.0f/255.0f blue:50.0f/255.0f alpha:1.0f]];
 }
 
@@ -270,18 +272,18 @@
 
     hostReach.reachableBlock = ^(Reachability*reach) {
         _networkStatus = [reach currentReachabilityStatus];
-        
+
         if ([self isParseReachable] && [PFUser currentUser] && self.homeViewController.objects.count == 0) {
             // Refresh home timeline on network restoration. Takes care of a freshly installed app that failed to load the main timeline under bad network conditions.
             // In this case, they'd see the empty timeline placeholder and have no way of refreshing the timeline unless they followed someone.
             [self.homeViewController loadObjects];
         }
     };
-    
+
     hostReach.unreachableBlock = ^(Reachability*reach) {
         _networkStatus = [reach currentReachabilityStatus];
     };
-    
+
     [hostReach startNotifier];
 }
 
@@ -291,18 +293,18 @@
     NSDictionary *remoteNotificationPayload = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
     if (remoteNotificationPayload) {
         [[NSNotificationCenter defaultCenter] postNotificationName:PAPAppDelegateApplicationDidReceiveRemoteNotification object:nil userInfo:remoteNotificationPayload];
-        
+
         if (![PFUser currentUser]) {
             return;
         }
-                
+
         // If the push notification payload references a photo, we will attempt to push this view controller into view
         NSString *photoObjectId = [remoteNotificationPayload objectForKey:kPAPPushPayloadPhotoObjectIdKey];
         if (photoObjectId && photoObjectId.length > 0) {
             [self shouldNavigateToPhoto:[PFObject objectWithoutDataWithClassName:kPAPPhotoClassKey objectId:photoObjectId]];
             return;
         }
-        
+
         // If the push notification payload references a user, we will attempt to push their profile into view
         NSString *fromObjectId = [remoteNotificationPayload objectForKey:kPAPPushPayloadFromUserObjectIdKey];
         if (fromObjectId && fromObjectId.length > 0) {
@@ -312,7 +314,7 @@
                 if (!error) {
                     UINavigationController *homeNavigationController = self.tabBarController.viewControllers[PAPHomeTabBarItemIndex];
                     self.tabBarController.selectedViewController = homeNavigationController;
-                    
+
                     PAPAccountViewController *accountViewController = [[PAPAccountViewController alloc] initWithStyle:UITableViewStylePlain];
                     NSLog(@"Presenting account view controller with user: %@", user);
                     accountViewController.user = (PFUser *)user;
@@ -363,13 +365,13 @@
             break;
         }
     }
-    
+
     // if we have a local copy of this photo, this won't result in a network fetch
     [targetPhoto fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
         if (!error) {
             UINavigationController *homeNavigationController = [[self.tabBarController viewControllers] objectAtIndex:PAPHomeTabBarItemIndex];
             [self.tabBarController setSelectedViewController:homeNavigationController];
-            
+
             PAPPhotoDetailsViewController *detailViewController = [[PAPPhotoDetailsViewController alloc] initWithPhoto:object];
             [homeNavigationController pushViewController:detailViewController animated:YES];
         }

@@ -547,7 +547,7 @@
 				LastUpgradeCheck = 0610;
 				TargetAttributes = {
 					09ABC06C13A1D52D009C3FCF = {
-						DevelopmentTeam = 289LFBE5L8;
+						DevelopmentTeam = VCRS784KF3;
 						SystemCapabilities = {
 							com.apple.SafariKeychain = {
 								enabled = 1;
