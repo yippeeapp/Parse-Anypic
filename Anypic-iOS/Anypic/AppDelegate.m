@@ -44,9 +44,12 @@
     // ****************************************************************************
     // Parse initialization
     [ParseCrashReporting enable];
+    
+    //[Parse enableLocalDatastore];
+    
     //[Parse setApplicationId:@"PklSbwxITu46cOumt6tdWw8Jtg2urg0vj0CrbLr0" clientKey:@"ML2sjwLC7k1RCujNCRP7fxG2HpUxtwzdIR1ElOe7"];
-    [Parse setApplicationId:@"cFOCgoE6v77JoeGXkF5cK5az4FLM5twfdOCGBphU"
-              clientKey:@"eJ5fVdx0SO8cXrZ8mTxxwREK34wpZ6VMcHBumKZl"];
+    [Parse setApplicationId:@"apX7wEcGL9B5Cfx3BehifLvj2EBiMaeINVJJbkVA"
+              clientKey:@"nOpl2GonrbGdoIWWpDSJesvAwYhHncgv3GqjLvec"];
     [PFFacebookUtils initializeFacebook];
     // ****************************************************************************
 

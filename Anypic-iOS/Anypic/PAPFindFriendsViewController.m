@@ -12,6 +12,7 @@
 #import "PAPLoadMoreCell.h"
 #import "PAPAccountViewController.h"
 #import "MBProgressHUD.h"
+#import "JFParseFBFriends.h"
 
 typedef enum {
     PAPFindFriendsFollowingNone = 0,    // User isn't following anybody in Friends list
@@ -110,6 +111,9 @@ typedef enum {
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.tableView.separatorColor = [UIColor colorWithRed:30.0f/255.0f green:30.0f/255.0f blue:30.0f/255.0f alpha:1.0f];
+    //[JFParseFBFriends findFriendsAndUpdate:YES completion:^(BOOL success, BOOL localStore, NSArray *pfusers, NSError *error) {
+        /* ... */
+    //}];
 }
 
 - (void)dismissPresentingViewController {

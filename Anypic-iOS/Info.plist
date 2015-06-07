@@ -15,11 +15,11 @@
 	<key>CFBundleIcons~ipad</key>
 	<dict/>
 	<key>CFBundleIdentifier</key>
-	<string>com.djzhang.PictureParse</string>
+	<string>com.yippee.anypic</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>PictureParse</string>
+	<string>Parse - AnyPic</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -35,7 +35,7 @@
 			<string>Icon@2x</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fb787096891411548</string>
+				<string>fb368637719980622</string>
 			</array>
 		</dict>
 		<dict>
@@ -45,7 +45,7 @@
 			<string>Icon@2x</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>PictureParse</string>
+				<string>anypic</string>
 			</array>
 		</dict>
 		<dict>
@@ -55,16 +55,16 @@
 			<string>Icon@2x</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>parsephoto</string>
+				<string>anypic</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>${APP_VERSION}</string>
 	<key>FacebookAppID</key>
-	<string>787096891411548</string>
+	<string>368637719980622</string>
 	<key>FacebookDisplayName</key>
-	<string>PictureParse</string>
+	<string>anypic</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.photography</string>
 	<key>LSRequiresIPhoneOS</key>
